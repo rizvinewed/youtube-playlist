@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    {% load static %}
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>YouTube Playlist Length Calculator</title>
+    <meta name="description" content="Find the length/duration of a YouTube playlist on this website. In addition, You can also sort YouTube playlists using our YouTube Playlist Length Calculator.">
+    <meta name="google-site-verification" content="Pm2syLuK2msPhPenSO6fCM1wHXDAId1wLcL3E9lRcCk" />
+    
+    <link rel="icon" type="image/x-icon" href="{% static 'playlist/favicon.png' %}">
+    <link rel="apple-touch-icon" href="{% static 'playlist/favicon.png' %}"/>
+
+    <meta property="og:title" content="YouTube Playlist Length Calculator" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="{% static 'playlist/logo.png' %}" />
+    <meta property="og:url" content="https://youtube-playlist-length-calculator.onrender.com/" />
+    <meta property="og:site_name" content="YouTube Playlist Length Calculator" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "YouTube Playlist length calculator",
+        "alternateName": ["Manage Youtube Playlist", "youtube-playlist-length-calculator.onrender.com", "Youtube Playlist duration calculator", "Find Youtube playlist length"],
+        "url": "https://youtube-playlist-length-calculator.onrender.com/"
+      }
+    </script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PFBHM5R9Q8"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-PFBHM5R9Q8');
+    </script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'playlist/base.css' %}">
+  </head>
+
+  <body class="d-flex flex-column">
+    <header>
+      <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'playlist/logo.png' %}" style="width: auto; height: 35px;" alt="Youtube Playlist Length"> Youtube Playlist Length</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="navbar-nav me-auto mb-2 mb-lg-0">
+              <a class="nav-item nav-link" href="{% url 'home' %}">Home</a>
+                <a class="nav-item nav-link" href="https://app.youform.io/forms/m4xs5hu0" target="_blank">Feedback</a>
+                <a class="nav-item nav-link" href="https://app.youform.io/forms/q9yphunz" target="_blank">Contact</a>
+                <a class="nav-item nav-link" href="{% url 'about_us' %}">About Us</a>
+            </div>
+  
+            <!-- <div class="navbar-nav">
+                    <a class="nav-item nav-link" href="https://www.buymeacoffee.com/groott" target="_blank"><img src="{% static 'playlist/bmc.png' %}" alt="Buy Me Coffee" width="110px"></a>
+            </div> -->
+    
+          </div>
+        </div>
+      </nav>
+      </header>
+
+      <div class="container flex-grow-1 p-2">
+          <div class="row">
+            <div class="col-sm d-none d-sm-block">
+            </div>
+            <div class="col-md-12">
+              {% if form.errors.items %}
+              <div class="toast-container position-fixed bottom-0 start-50 translate-middle-x p-3">
+                <div class="toast align-items-center text-bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="false">
+                  <div class="d-flex">
+                  <div class="toast-body">
+                    {% for field, errors in form.errors.items %}
+                    {% for error in errors %}
+                    <i class="bi bi-exclamation-circle"></i>&nbsp;&nbsp;{{ error }} <br>
+                    {% endfor %}
+                    {% endfor %}
+                  </div>
+                  <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+
+            {% if messages %}
+              {% for message in messages %}
+              {% if message.tags == 'error' %}
+              <div class="toast-container position-fixed bottom-0 start-50 translate-middle-x p-3">
+                <div class="toast align-items-center text-bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="false">
+                    <div class="d-flex">
+                      <div class="toast-body">
+                        <i class="bi bi-exclamation-circle"></i>&nbsp;&nbsp;{{ message }}<br>
+                      </div>
+                      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                  </div>
+            </div>
+              {% else %}
+              <div class="toast-container position-fixed bottom-0 start-50 translate-middle-x p-3">
+                <div class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="false">
+                    <div class="d-flex">
+                      <div class="toast-body">
+                        <i class="bi bi-check2-circle"></i>&nbsp;&nbsp;{{ message }} <br>
+                      </div>
+                      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                  </div>
+            </div>
+              {% endif %}
+
+              {% endfor %}
+            {% endif %}
+
+              {% block content %}{% endblock %}
+            </div>
+            <div class="col-sm d-none d-sm-block">
+            </div>
+        </div>
+      </div>
+      <hr>
+      <footer class="footer">
+        Made with&nbsp;&nbsp;<span style="color: red;"><i class="bi bi-heart-fill small"></span></i>&nbsp;&nbsp;for Community. <br><a href="{% url 'privacy_policy' %}">Privacy policy</a> <br><a href="{% url 'terms_and_conditions' %}">Terms and Conditions</a>
+      </footer>
+
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
+      <script src="{% static 'playlist/toast.js' %}"></script>
+  
+    </body>
+</html>
