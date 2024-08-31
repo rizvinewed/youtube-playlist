@@ -1,39 +1,40 @@
+# YouTube Playlist Length Calculator
 
-    <h1>YouTube Playlist Length Calculator</h1>
+This project is a web application that allows users to calculate the total duration of YouTube playlists. It provides a user-friendly interface for content creators, educators, and binge-watchers to get accurate time insights.
 
-    <p>This project is a web application that allows users to calculate the total duration of YouTube playlists. It provides a user-friendly interface for content creators, educators, and binge-watchers to get accurate time insights.</p>
+## Live Demo
 
-    <h2>Live Demo</h2>
-    <p>The live application is hosted on Render and can be accessed here:<br>
-        <a href="https://youtube-playlist-length-calculator.onrender.com/" target="_blank"><strong>YouTube Playlist Length Calculator</strong></a>
-    </p>
+The live application is hosted on Render and can be accessed here:  
+[**YouTube Playlist Length Calculator**](https://youtube-playlist-length-calculator.onrender.com/)
 
-    <h2>Features</h2>
-    <ul>
-        <li>Calculate the total length of any public YouTube playlist.</li>
-        <li>Display the total hours, minutes, and seconds.</li>
-        <li>User-friendly and responsive interface.</li>
-    </ul>
+## Features
 
-    <h2>Technologies Used</h2>
-    <ul>
-        <li><strong>Backend:</strong> Node.js, Express</li>
-        <li><strong>Frontend:</strong> HTML, CSS, Python</li>
-        <li><strong>Deployment:</strong> Render</li>
-    </ul>
+- Calculate the total length of any public YouTube playlist.
+- Display the total hours, minutes, and seconds.
+- User-friendly and responsive interface.
 
-    <h2>Getting Started</h2>
-    <p>To get a local copy of the project up and running, follow these simple steps.</p>
+## Technologies Used
 
-    <h3>Prerequisites</h3>
-    <p>Node.js installed on your local machine.</p>
+- **Backend:** Node.js, Express
+- **Frontend:** HTML, CSS, Python
+- **Deployment:** Render
 
-    <h2>Deployment</h2>
-    <p>The application is deployed on Render. You can view it live at the link provided above.</p>
+## Getting Started
 
-    <h2>License</h2>
-    <p>This project is licensed under the MIT License.</p>
+To get a local copy of the project up and running, follow these simple steps.
 
-    <h2>Contact</h2>
-    <p>If you have any questions or suggestions, please contact via website - <a href="https://youtubeplaylistlength.com/" target="_blank"><strong>YouTube Playlist Length</strong></a></p>
+### Prerequisites
 
+Node.js installed on your local machine.
+
+## Deployment
+
+The application is deployed on Render. You can view it live at the link provided above.
+
+## License
+
+This project is licensed under the MIT License.
+
+## Contact
+
+If you have any questions or suggestions, please contact via website - [**YouTube Playlist Length**](https://youtubeplaylistlength.com/)
