@@ -1,8 +1,8 @@
 REGEX_PATTERN = {
-    "PLAYLIST": "^([\S]+list=)?([\w_-]+)[\S]*$",
-    "HOUR": "(\d+)H",
-    "MINUTE": "(\d+)M",
-    "SECOND": "(\d+)S",
+    "PLAYLIST": r"^([\S]+list=)?([\w_-]+)[\S]*$",
+    "HOUR": r"(\d+)H",
+    "MINUTE": r"(\d+)M",
+    "SECOND": r"(\d+)S",
 }
 
 MIN_VIDEO_NUMBER = 1

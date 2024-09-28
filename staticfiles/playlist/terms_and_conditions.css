@@ -1,0 +1,45 @@
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    padding: 20px;
+    background-color: #f4f4f4;
+}
+h1, h2, h3, h4, h5, h6 {
+    color: #333;
+}
+h1 {
+    font-size: 24px;
+}
+h2 {
+    font-size: 20px;
+}
+h3 {
+    font-size: 18px;
+}
+p {
+    margin: 0 0 10px;
+}
+a {
+    color: #1a73e8;
+}
+.section {
+    margin-bottom: 20px;
+}
+.section h2 {
+    margin-top: 0;
+}
+ul {
+    padding-left: 20px;
+}
+.table-of-contents {
+    margin-bottom: 20px;
+}
+.table-of-contents ul {
+    list-style-type: none;
+    padding: 0;
+}
+.table-of-contents li {
+    margin-bottom: 10px;
+}
