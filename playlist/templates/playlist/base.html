@@ -1,45 +1,29 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     {% load static %}
 
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>YouTube Playlist Length Calculator</title>
-    <meta
-      name="description"
-      content="Find the length/duration of a YouTube playlist on this website. In addition, You can also sort YouTube playlists using our YouTube Playlist Length Calculator."
-    />
-    <meta
-      name="google-site-verification"
-      content="z6o1V9y3mlRLJGr_VDstYz2NU_XB5giN6-vge8O4XC0"
-    />
+    <meta name="description" content="Find the length/duration of a YouTube playlist on this website. In addition, You can also sort YouTube playlists using our YouTube Playlist Length Calculator.">
+    <meta name="google-site-verification" content="z6o1V9y3mlRLJGr_VDstYz2NU_XB5giN6-vge8O4XC0" />
     <meta name="msvalidate.01" content="B12DCAA3F52E88BA5F2F746C46DA1E4A" />
-
-    <link
-      rel="icon"
-      type="image/x-icon"
-      href="{% static 'playlist/favicon.png' %}"
-    />
-    <link rel="apple-touch-icon" href="{% static 'playlist/favicon.png' %}" />
+    
+    <link rel="icon" type="image/x-icon" href="{% static 'playlist/favicon.png' %}">
+    <link rel="apple-touch-icon" href="{% static 'playlist/favicon.png' %}"/>
 
     <meta property="og:title" content="YouTube Playlist Length Calculator" />
     <meta property="og:type" content="website" />
     <meta property="og:image" content="{% static 'playlist/logo.png' %}" />
-    <meta
-      property="og:url"
-      content="https://youtube-playlist-length-calculator.onrender.com/"
-    />
-    <meta
-      property="og:site_name"
-      content="YouTube Playlist Length Calculator"
-    />
+    <meta property="og:url" content="https://youtube-playlist-length-calculator.onrender.com/" />
+    <meta property="og:site_name" content="YouTube Playlist Length Calculator" />
     <meta name="yandex-verification" content="d3826cd2a498b4a7" />
 
     <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3932434471923785"
      crossorigin="anonymous"></script> -->
 
-    <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8900911783342174"
+     <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8900911783342174"
      crossorigin="anonymous"></script> -->
 
     <script type="application/ld+json">
@@ -47,135 +31,78 @@
         "@context": "https://schema.org",
         "@type": "WebSite",
         "name": "YouTube Playlist length calculator",
-        "alternateName": [
-          "Manage Youtube Playlist",
-          "youtube-playlist-length-calculator.onrender.com",
-          "Youtube Playlist duration calculator",
-          "Find Youtube playlist length"
-        ],
+        "alternateName": ["Manage Youtube Playlist", "youtube-playlist-length-calculator.onrender.com", "Youtube Playlist duration calculator", "Find Youtube playlist length"],
         "url": "https://youtube-playlist-length-calculator.onrender.com/"
       }
     </script>
     <!-- Google tag (gtag.js) -->
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-PVXZ60SQ91"
-    ></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PVXZ60SQ91"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
 
-      gtag("config", "G-PVXZ60SQ91");
+      gtag('config', 'G-PVXZ60SQ91');
     </script>
 
     <!-- Clarity -->
     <script type="text/javascript">
-      (function (c, l, a, r, i, t, y) {
-        c[a] =
-          c[a] ||
-          function () {
-            (c[a].q = c[a].q || []).push(arguments);
-          };
-        t = l.createElement(r);
-        t.async = 1;
-        t.src = "https://www.clarity.ms/tag/" + i;
-        y = l.getElementsByTagName(r)[0];
-        y.parentNode.insertBefore(t, y);
+      (function(c,l,a,r,i,t,y){
+          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
       })(window, document, "clarity", "script", "nb8lklnbzc");
     </script>
+  
+  
 
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Lato&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="{% static 'playlist/base.css' %}"
-    />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'playlist/base.css' %}">
   </head>
 
   <body class="d-flex flex-column">
     <header>
       <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
-          <a class="navbar-brand" href="{% url 'home' %}"
-            ><img
-              src="{% static 'playlist/logo.png' %}"
-              style="width: auto; height: 35px"
-              alt="Youtube Playlist Length"
-            />
-            Youtube Playlist Length</a
-          >
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
+          <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'playlist/logo.png' %}" style="width: auto; height: 35px;" alt="Youtube Playlist Length"> Youtube Playlist Length</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <div class="navbar-nav me-auto mb-2 mb-lg-0">
               <a class="nav-item nav-link" href="{% url 'home' %}">Home</a>
-              <a
-                class="nav-item nav-link"
-                href="https://youtubeplaylistlength.com/contact-us/"
-                target="_blank"
-                >Feedback</a
-              >
-              <a
-                class="nav-item nav-link"
-                href="https://youtubeplaylistlength.com/contact-us/"
-                target="_blank"
-                >Contact</a
-              >
-              <a class="nav-item nav-link" href="{% url 'about_us' %}"
-                >About Us</a
-              >
+                <a class="nav-item nav-link" href="https://youtubeplaylistlength.com/contact-us/" target="_blank">Feedback</a>
+                <a class="nav-item nav-link" href="https://youtubeplaylistlength.com/contact-us/" target="_blank">Contact</a>
+                <a class="nav-item nav-link" href="{% url 'about_us' %}">About Us</a>
             </div>
+  
+    
           </div>
         </div>
       </nav>
-    </header>
-    <div class="container flex-grow-1 p-2">
-      <div
-        class="ads"
-        style="display: flex; justify-content: center; align-items: center"
-      >
-        <!-- Load AdSense script asynchronously -->
+      </header>
+      <div class="container flex-grow-1 p-2">
+        <div class="ads" style="display: flex; justify-content: center; align-items: center;">
+          <!-- Load AdSense script asynchronously -->
 
-        <script type="text/javascript">
-          google_ad_client = "ca-pub-8900911783342174";
-          /* firsttop728and90 */
-          google_ad_slot = "firsttop728and90";
-          google_ad_width = 728;
-          google_ad_height = 90;
-        </script>
-        <script
-          type="text/javascript"
-          src="//pagead2.googlesyndication.com/pagead/show_ads.js"
-        ></script>
 
-        <!-- <script type="text/javascript">
+          <script type="text/javascript">
+            google_ad_client = "ca-pub-8900911783342174";
+            /* firsttop728and90 */
+            google_ad_slot = "firsttop728and90";
+            google_ad_width = 728;
+            google_ad_height = 90;
+            </script>
+            <script type="text/javascript" src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+            </script>                                                                                                       
+          
+
+
+          <!-- <script type="text/javascript">
             atOptions = {
               'key' : '478ad6414c3a793716750135f7c29851',
               'format' : 'iframe',
@@ -185,154 +112,107 @@
             };
           </script>
           <script type="text/javascript" src="//www.topcreativeformat.com/478ad6414c3a793716750135f7c29851/invoke.js"></script> -->
-      </div>
-      <div class="row">
-        <div class="left-ads" style="height: 600px; width: 120px">
+        </div>
+         <div class="row">
+        <div  class="left-ads" style=" height: 600px; width: 120px;">
           <script type="text/javascript">
-            google_ad_client = "ca-pub-8900911783342174";
-            /* 120and600 */
-            google_ad_slot = "120and600";
-            google_ad_width = 120;
-            google_ad_height = 600;
-          </script>
-          <script
-            type="text/javascript"
-            src="//pagead2.googlesyndication.com/pagead/show_ads.js"
-          ></script>
+google_ad_client = "ca-pub-8900911783342174";
+/* 120and600 */
+google_ad_slot = "120and600";
+google_ad_width = 120;
+google_ad_height = 600;
+</script>
+<script type="text/javascript" src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
         </div>
 
-        <div class="col-sm d-none d-sm-block"></div>
-        <div class="col-md-12">
-          {% if form.errors.items %}
-          <div
-            class="toast-container position-fixed bottom-0 start-50 translate-middle-x p-3"
-          >
-            <div
-              class="toast align-items-center text-bg-danger border-0"
-              role="alert"
-              aria-live="assertive"
-              aria-atomic="true"
-              data-bs-autohide="false"
-            >
-              <div class="d-flex">
-                <div class="toast-body">
-                  {% for field, errors in form.errors.items %} {% for error in
-                  errors %}
-                  <i class="bi bi-exclamation-circle"></i>&nbsp;&nbsp;{{ error
-                  }} <br />
-                  {% endfor %} {% endfor %}
-                </div>
-                <button
-                  type="button"
-                  class="btn-close btn-close-white me-2 m-auto"
-                  data-bs-dismiss="toast"
-                  aria-label="Close"
-                ></button>
-              </div>
+            <div class="col-sm d-none d-sm-block">
             </div>
-          </div>
-          {% endif %} {% if messages %} {% for message in messages %} {% if
-          message.tags == 'error' %}
-          <div
-            class="toast-container position-fixed bottom-0 start-50 translate-middle-x p-3"
-          >
-            <div
-              class="toast align-items-center text-bg-danger border-0"
-              role="alert"
-              aria-live="assertive"
-              aria-atomic="true"
-              data-bs-autohide="false"
-            >
-              <div class="d-flex">
-                <div class="toast-body">
-                  <i class="bi bi-exclamation-circle"></i>&nbsp;&nbsp;{{ message
-                  }}<br />
+            <div class="col-md-12">
+              {% if form.errors.items %}
+              <div class="toast-container position-fixed bottom-0 start-50 translate-middle-x p-3">
+                <div class="toast align-items-center text-bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="false">
+                  <div class="d-flex">
+                  <div class="toast-body">
+                    {% for field, errors in form.errors.items %}
+                    {% for error in errors %}
+                    <i class="bi bi-exclamation-circle"></i>&nbsp;&nbsp;{{ error }} <br>
+                    {% endfor %}
+                    {% endfor %}
+                  </div>
+                  <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                  </div>
                 </div>
-                <button
-                  type="button"
-                  class="btn-close btn-close-white me-2 m-auto"
-                  data-bs-dismiss="toast"
-                  aria-label="Close"
-                ></button>
               </div>
+            {% endif %}
+
+            {% if messages %}
+              {% for message in messages %}
+              {% if message.tags == 'error' %}
+              <div class="toast-container position-fixed bottom-0 start-50 translate-middle-x p-3">
+                <div class="toast align-items-center text-bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="false">
+                    <div class="d-flex">
+                      <div class="toast-body">
+                        <i class="bi bi-exclamation-circle"></i>&nbsp;&nbsp;{{ message }}<br>
+                      </div>
+                      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                  </div>
             </div>
-          </div>
-          {% else %}
-          <div
-            class="toast-container position-fixed bottom-0 start-50 translate-middle-x p-3"
-          >
-            <div
-              class="toast align-items-center text-bg-success border-0"
-              role="alert"
-              aria-live="assertive"
-              aria-atomic="true"
-              data-bs-autohide="false"
-            >
-              <div class="d-flex">
-                <div class="toast-body">
-                  <i class="bi bi-check2-circle"></i>&nbsp;&nbsp;{{ message }}
-                  <br />
-                </div>
-                <button
-                  type="button"
-                  class="btn-close btn-close-white me-2 m-auto"
-                  data-bs-dismiss="toast"
-                  aria-label="Close"
-                ></button>
-              </div>
+              {% else %}
+              <div class="toast-container position-fixed bottom-0 start-50 translate-middle-x p-3">
+                <div class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="false">
+                    <div class="d-flex">
+                      <div class="toast-body">
+                        <i class="bi bi-check2-circle"></i>&nbsp;&nbsp;{{ message }} <br>
+                      </div>
+                      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                  </div>
             </div>
-          </div>
-          {% endif %} {% endfor %} {% endif %} {% block content %}{% endblock %}
-        </div>
-        <div class="col-sm d-none d-sm-block"></div>
-        <div class="right-ads" style="height: 600px; width: 120px">
+              {% endif %}
+
+              {% endfor %}
+            {% endif %}
+
+              {% block content %}{% endblock %}
+            </div>
+            <div class="col-sm d-none d-sm-block">
+            </div>
+        <div  class="right-ads" style=" height: 600px; width: 120px;">
           <script type="text/javascript">
-            google_ad_client = "ca-pub-8900911783342174";
-            /* 120and600 */
-            google_ad_slot = "120and600";
-            google_ad_width = 120;
-            google_ad_height = 600;
-          </script>
-          <script
-            type="text/javascript"
-            src="//pagead2.googlesyndication.com/pagead/show_ads.js"
-          ></script>
+google_ad_client = "ca-pub-8900911783342174";
+/* 120and600 */
+google_ad_slot = "120and600";
+google_ad_width = 120;
+google_ad_height = 600;
+</script>
+<script type="text/javascript" src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+        </div>
+
         </div>
       </div>
-    </div>
-    <hr />
-    <footer class="footer">
-      <div style="display: flex; justify-content: center">
-        Powered by
-        <a href="https://madquick.in/" target="_blank">
-          Web Development Company
-        </a>
-        Madquick
-      </div>
-      Made with&nbsp;&nbsp;<span style="color: red"
-        ><i class="bi bi-heart-fill small"></i></span
-      >&nbsp;&nbsp;for Community. <br /><a href="{% url 'privacy_policy' %}"
-        >Privacy policy</a
-      >
-      <br /><a href="{% url 'terms_and_conditions' %}">Terms and Conditions</a>
-    </footer>
-    <style>
-      .left-ads,
-      .right-ads {
-        position: absolute;
-      }
-      .right-ads {
-        right: 30px;
-      }
-      .left-ads {
-        left: 30px;
-      }
-    </style>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"
-      integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS"
-      crossorigin="anonymous"
-    ></script>
-    <script src="{% static 'playlist/toast.js' %}"></script>
-  </body>
+      <hr>
+      <footer class="footer">
+        <div style="display: flex;  justify-content: center;">
+          Powered by <a href="https://madquick.in/" target="_blank"> Web Development Company </a> Madquick 
+        </div>
+        Made with&nbsp;&nbsp;<span style="color: red;"><i class="bi bi-heart-fill small"></i></span>&nbsp;&nbsp;for Community. <br><a href="{% url 'privacy_policy' %}">Privacy policy</a> <br><a href="{% url 'terms_and_conditions' %}">Terms and Conditions</a>
+      </footer>
+<style>
+  .left-ads, .right-ads{
+    position: absolute;
+  }
+  .right-ads{
+    right: 30px;
+  }
+  .left-ads{
+    left: 30px
+  }
+</style>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
+      <script src="{% static 'playlist/toast.js' %}"></script>
+  
+    </body>
 </html>

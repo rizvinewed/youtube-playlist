@@ -1,941 +1,494 @@
-{% extends "playlist/base.html" %} {% load static %} {% block content %} {% load
-custom_tags %}
+{% extends "playlist/base.html" %}
+{% load static %}
+{% block content %}
+{% load custom_tags %}
 <div class="shadow-effect mb-4 pt-4">
-  <h1 class="page-title">Youtube Playlist length calculator</h1>
-  <hr />
+   <h1 class="page-title">Youtube Playlist length calculator</h1>
+   <hr>
 
-  <form method="POST" class="mt-4">
-    {% csrf_token %}
-    <fieldset class="form-group">
-      <div class="row">
-        <div class="col-md-6 col-sm-12 mb-3">{{ form.url }}</div>
-        <div class="col-md-2 col-sm-6 mb-3">{{ form.from_video }}</div>
-        <div class="col-md-2 col-sm-6 mb-3">{{ form.to_video }}</div>
-        <div class="col-md-2 col-sm-12 d-grid mb-3">
-          <button class="btn btn-sm btn-outline-violet" type="submit" id="url">
-            Submit
-          </button>
-        </div>
-        <div class="col">
-          <span
-            ><b><i>Instructions</i></b></span
-          >
-          <div>
-            <p>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="currentColor"
-                class="bi bi-check2-all"
-                viewBox="0 0 16 16"
-                style="color: #793fdf"
-              >
-                <path
-                  d="M12.354 4.354a.5.5 0 0 0-.708-.708L5 10.293 1.854 7.146a.5.5 0 1 0-.708.708l3.5 3.5a.5.5 0 0 0 .708 0zm-4.208 7-.896-.897.707-.707.543.543 6.646-6.647a.5.5 0 0 1 .708.708l-7 7a.5.5 0 0 1-.708 0"
-                />
-                <path
-                  d="m5.354 7.146.896.897-.707.707-.897-.896a.5.5 0 1 1 .708-.708"
-                />
-              </svg>
-              Hidden videos are excluded from calculations. <br />
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="currentColor"
-                class="bi bi-check2-all"
-                viewBox="0 0 16 16"
-                style="color: #793fdf"
-              >
-                <path
-                  d="M12.354 4.354a.5.5 0 0 0-.708-.708L5 10.293 1.854 7.146a.5.5 0 1 0-.708.708l3.5 3.5a.5.5 0 0 0 .708 0zm-4.208 7-.896-.897.707-.707.543.543 6.646-6.647a.5.5 0 0 1 .708.708l-7 7a.5.5 0 0 1-.708 0"
-                />
-                <path
-                  d="m5.354 7.146.896.897-.707.707-.897-.896a.5.5 0 1 1 .708-.708"
-                />
-              </svg>
-              Optionally, specify 'From' and 'To' values to define a range for
-              video length calculation. <br />
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="currentColor"
-                class="bi bi-check2-all"
-                viewBox="0 0 16 16"
-                style="color: #793fdf"
-              >
-                <path
-                  d="M12.354 4.354a.5.5 0 0 0-.708-.708L5 10.293 1.854 7.146a.5.5 0 1 0-.708.708l3.5 3.5a.5.5 0 0 0 .708 0zm-4.208 7-.896-.897.707-.707.543.543 6.646-6.647a.5.5 0 0 1 .708.708l-7 7a.5.5 0 0 1-.708 0"
-                />
-                <path
-                  d="m5.354 7.146.896.897-.707.707-.897-.896a.5.5 0 1 1 .708-.708"
-                />
-              </svg>
-              If 'From' is not provided, the calculation starts from the first
-              video. <br />
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="currentColor"
-                class="bi bi-check2-all"
-                viewBox="0 0 16 16"
-                style="color: #793fdf"
-              >
-                <path
-                  d="M12.354 4.354a.5.5 0 0 0-.708-.708L5 10.293 1.854 7.146a.5.5 0 1 0-.708.708l3.5 3.5a.5.5 0 0 0 .708 0zm-4.208 7-.896-.897.707-.707.543.543 6.646-6.647a.5.5 0 0 1 .708.708l-7 7a.5.5 0 0 1-.708 0"
-                />
-                <path
-                  d="m5.354 7.146.896.897-.707.707-.897-.896a.5.5 0 1 1 .708-.708"
-                />
-              </svg>
-              If 'To' is not provided, the calculation ends at the last video.
-              <br />
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="currentColor"
-                class="bi bi-check2-all"
-                viewBox="0 0 16 16"
-                style="color: #793fdf"
-              >
-                <path
-                  d="M12.354 4.354a.5.5 0 0 0-.708-.708L5 10.293 1.854 7.146a.5.5 0 1 0-.708.708l3.5 3.5a.5.5 0 0 0 .708 0zm-4.208 7-.896-.897.707-.707.543.543 6.646-6.647a.5.5 0 0 1 .708.708l-7 7a.5.5 0 0 1-.708 0"
-                />
-                <path
-                  d="m5.354 7.146.896.897-.707.707-.897-.896a.5.5 0 1 1 .708-.708"
-                />
-              </svg>
-              Results will focus on the specified range if 'From' or 'To' values
-              are provided. <br />
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="currentColor"
-                class="bi bi-check2-all"
-                viewBox="0 0 16 16"
-                style="color: #793fdf"
-              >
-                <path
-                  d="M12.354 4.354a.5.5 0 0 0-.708-.708L5 10.293 1.854 7.146a.5.5 0 1 0-.708.708l3.5 3.5a.5.5 0 0 0 .708 0zm-4.208 7-.896-.897.707-.707.543.543 6.646-6.647a.5.5 0 0 1 .708.708l-7 7a.5.5 0 0 1-.708 0"
-                />
-                <path
-                  d="m5.354 7.146.896.897-.707.707-.897-.896a.5.5 0 1 1 .708-.708"
-                />
-              </svg>
-              For example, if the playlist has 10 videos and you set 'From' to 6
-              and 'To' to 10, all the calculations will only include videos
-              numbered from 6 to 10.
-            </p>
-          </div>
-        </div>
-      </div>
-    </fieldset>
-  </form>
+   <form method="POST" class="mt-4">
+      {% csrf_token %}
+      <fieldset class="form-group">
+         <div class="row">
+            <div class="col-md-6 col-sm-12 mb-3">{{ form.url }}</div>
+            <div class="col-md-2 col-sm-6 mb-3">{{ form.from_video }}</div>
+            <div class="col-md-2 col-sm-6 mb-3">{{ form.to_video }}</div>
+            <div class="col-md-2 col-sm-12 d-grid mb-3">
+               <button class="btn btn-sm btn-outline-violet" type="submit" id="url">Submit</button>
+            </div>
+            <div class="col">
+               <span><b><i>Instructions</i></b></span>
+               <div >
+                  <p><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2-all" viewBox="0 0 16 16" style="color: #793fdf;">
+                     <path d="M12.354 4.354a.5.5 0 0 0-.708-.708L5 10.293 1.854 7.146a.5.5 0 1 0-.708.708l3.5 3.5a.5.5 0 0 0 .708 0zm-4.208 7-.896-.897.707-.707.543.543 6.646-6.647a.5.5 0 0 1 .708.708l-7 7a.5.5 0 0 1-.708 0"/>
+                     <path d="m5.354 7.146.896.897-.707.707-.897-.896a.5.5 0 1 1 .708-.708"/>
+                   </svg>
+                    Hidden videos are excluded from calculations. <br>
+                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2-all" viewBox="0 0 16 16" style="color: #793fdf;">
+                        <path d="M12.354 4.354a.5.5 0 0 0-.708-.708L5 10.293 1.854 7.146a.5.5 0 1 0-.708.708l3.5 3.5a.5.5 0 0 0 .708 0zm-4.208 7-.896-.897.707-.707.543.543 6.646-6.647a.5.5 0 0 1 .708.708l-7 7a.5.5 0 0 1-.708 0"/>
+                        <path d="m5.354 7.146.896.897-.707.707-.897-.896a.5.5 0 1 1 .708-.708"/>
+                      </svg>
+                       Optionally, specify 'From' and 'To' values to define a range for video length calculation. <br>
+                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2-all" viewBox="0 0 16 16" style="color: #793fdf;">
+                        <path d="M12.354 4.354a.5.5 0 0 0-.708-.708L5 10.293 1.854 7.146a.5.5 0 1 0-.708.708l3.5 3.5a.5.5 0 0 0 .708 0zm-4.208 7-.896-.897.707-.707.543.543 6.646-6.647a.5.5 0 0 1 .708.708l-7 7a.5.5 0 0 1-.708 0"/>
+                        <path d="m5.354 7.146.896.897-.707.707-.897-.896a.5.5 0 1 1 .708-.708"/>
+                      </svg>
+                       If 'From' is not provided, the calculation starts from the first video. <br>
+                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2-all" viewBox="0 0 16 16" style="color: #793fdf;">
+                        <path d="M12.354 4.354a.5.5 0 0 0-.708-.708L5 10.293 1.854 7.146a.5.5 0 1 0-.708.708l3.5 3.5a.5.5 0 0 0 .708 0zm-4.208 7-.896-.897.707-.707.543.543 6.646-6.647a.5.5 0 0 1 .708.708l-7 7a.5.5 0 0 1-.708 0"/>
+                        <path d="m5.354 7.146.896.897-.707.707-.897-.896a.5.5 0 1 1 .708-.708"/>
+                      </svg>
+                       If 'To' is not provided, the calculation ends at the last video. <br>
+                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2-all" viewBox="0 0 16 16" style="color: #793fdf;">
+                        <path d="M12.354 4.354a.5.5 0 0 0-.708-.708L5 10.293 1.854 7.146a.5.5 0 1 0-.708.708l3.5 3.5a.5.5 0 0 0 .708 0zm-4.208 7-.896-.897.707-.707.543.543 6.646-6.647a.5.5 0 0 1 .708.708l-7 7a.5.5 0 0 1-.708 0"/>
+                        <path d="m5.354 7.146.896.897-.707.707-.897-.896a.5.5 0 1 1 .708-.708"/>
+                      </svg>                      
+                      Results will focus on the specified range if 'From' or 'To' values are provided. <br>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2-all" viewBox="0 0 16 16" style="color: #793fdf;">
+                        <path d="M12.354 4.354a.5.5 0 0 0-.708-.708L5 10.293 1.854 7.146a.5.5 0 1 0-.708.708l3.5 3.5a.5.5 0 0 0 .708 0zm-4.208 7-.896-.897.707-.707.543.543 6.646-6.647a.5.5 0 0 1 .708.708l-7 7a.5.5 0 0 1-.708 0"/>
+                        <path d="m5.354 7.146.896.897-.707.707-.897-.896a.5.5 0 1 1 .708-.708"/>
+                      </svg>
+                      For example, if the playlist has 10 videos and you set 'From' to 6 and 'To' to 10, all the calculations will only include videos numbered from 6 to 10.
+                  </p>
+                </div>
+            </div>
+
+         </div>
+
+      </fieldset>
+   </form>
 </div>
 {% if total_duration %}
 <div class="shadow-effect mb-4">
-  <div class="mb-4">
-    <h2 class="playlist-title">{{playlist_title}}</h2>
-    <span class="text-muted float-end"
-      ><i class="bi bi-check2-all"></i> No. of videos: {{video_count}}</span
-    >
-    <br />
-    <hr />
-    <div>
-      <div class="row">
-        <div class="col-lg-4 col-md-6 col-sm-12">
-          <div class="playlist-duration-tile">
-            <small class="text-muted"
-              ><i class="bi bi-music-note-list"></i> Playlist Duration</small
-            >
-            <h5>{{ total_duration.1 }}</h5>
-          </div>
-        </div>
 
-        <div class="col-lg-4 col-md-6 col-sm-12">
-          <div class="playlist-duration-tile">
-            <small class="text-muted"
-              ><i class="bi bi-music-note-list"></i> Average Duration</small
-            >
-            <h5>{{ average_video_length }}</h5>
-          </div>
-        </div>
 
-        <div class="col-lg-4 col-md-6 col-sm-12">
-          <div class="playlist-duration-tile">
-            <small class="text-muted"
-              ><i class="bi bi-fast-forward-btn-fill"></i> At 1.25X speed</small
-            >
-            <h5>{{ total_duration.125 }}</h5>
-          </div>
-        </div>
-
-        <div class="col-lg-4 col-md-6 col-sm-12">
-          <div class="playlist-duration-tile">
-            <small class="text-muted"
-              ><i class="bi bi-fast-forward-btn-fill"></i> At 1.5X speed</small
-            >
-            <h5>{{ total_duration.150 }}</h5>
-          </div>
-        </div>
-
-        <div class="col-lg-4 col-md-6 col-sm-12">
-          <div class="playlist-duration-tile">
-            <small class="text-muted"
-              ><i class="bi bi-fast-forward-btn-fill"></i> At 1.75X speed</small
-            >
-            <h5>{{ total_duration.175 }}</h5>
-          </div>
-        </div>
-
-        <div class="col-lg-4 col-md-6 col-sm-12">
-          <div class="playlist-duration-tile">
-            <small class="text-muted"
-              ><i class="bi bi-fast-forward-btn-fill"></i> At 2X speed</small
-            >
-            <h5>{{ total_duration.2 }}</h5>
-          </div>
-        </div>
-      </div>
-    </div>
-    <hr />
-  </div>
-
-  <div>
-    <ul class="nav nav-tabs" id="myTab" role="tablist">
-      <li class="nav-item" role="presentation">
-        <button
-          class="nav-link active"
-          id="latest-first-tab"
-          data-bs-toggle="tab"
-          data-bs-target="#latest-first-tab-pane"
-          type="button"
-          role="tab"
-          aria-controls="latest-first-tab-pane"
-          aria-selected="true"
-        >
-          Latest
-        </button>
-      </li>
-      <li class="nav-item" role="presentation">
-        <button
-          class="nav-link"
-          id="oldest-first-tab"
-          data-bs-toggle="tab"
-          data-bs-target="#oldest-first-tab-pane"
-          type="button"
-          role="tab"
-          aria-controls="oldest-first-tab-pane"
-          aria-selected="false"
-        >
-          Oldest
-        </button>
-      </li>
-      <li class="nav-item" role="presentation">
-        <button
-          class="nav-link"
-          id="most-viewed-tab"
-          data-bs-toggle="tab"
-          data-bs-target="#most-viewed-tab-pane"
-          type="button"
-          role="tab"
-          aria-controls="most-viewed-tab-pane"
-          aria-selected="false"
-        >
-          Views
-        </button>
-      </li>
-      <li class="nav-item" role="presentation">
-        <button
-          class="nav-link"
-          id="most-liked-tab"
-          data-bs-toggle="tab"
-          data-bs-target="#most-liked-tab-pane"
-          type="button"
-          role="tab"
-          aria-controls="most-liked-tab-pane"
-          aria-selected="false"
-        >
-          Likes
-        </button>
-      </li>
-      <li class="nav-item" role="presentation">
-        <button
-          class="nav-link"
-          id="shortest-first-tab"
-          data-bs-toggle="tab"
-          data-bs-target="#shortest-first-tab-pane"
-          type="button"
-          role="tab"
-          aria-controls="shortest-first-tab-pane"
-          aria-selected="false"
-        >
-          Shortest
-        </button>
-      </li>
-      <li class="nav-item" role="presentation">
-        <button
-          class="nav-link"
-          id="longest-first-tab"
-          data-bs-toggle="tab"
-          data-bs-target="#longest-first-tab-pane"
-          type="button"
-          role="tab"
-          aria-controls="longest-first-tab-pane"
-          aria-selected="false"
-        >
-          Longest
-        </button>
-      </li>
-    </ul>
-
-    <div class="tab-content" id="myTabContent">
-      <div
-        class="tab-pane fade show active mt-3"
-        id="latest-first-tab-pane"
-        role="tabpanel"
-        aria-labelledby="latest-first-tab"
-        tabindex="0"
-      >
-        <div class="row">
-          {% for video in latest_first %}
-          <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-            <div class="card">
-              <a href="{{ video.url }}" target="_blank"
-                ><img
-                  src="{{ video.thumbnail }}"
-                  class="card-img-top"
-                  alt="..."
-              /></a>
-              <div class="card-body">
-                <h5 class="card-title video-title">{{ video.title }} ...</h5>
-                <ul class="list-group list-group-flush video-stats">
-                  <li class="list-group-item text-muted">
-                    <small
-                      ><i class="bi bi-clock-fill"></i
-                      ><span class="m-1"
-                        >{{ video.raw_video_duration }}</span
-                      ></small
-                    >
-                  </li>
-                  <li class="list-group-item text-muted">
-                    <small
-                      ><i class="bi bi-eye-fill"></i
-                      ><span class="m-1"
-                        >{{ video.view_count | human_format_count }}</span
-                      >Views</small
-                    >
-                  </li>
-                  <li class="list-group-item text-muted">
-                    <small
-                      ><i class="bi bi-hand-thumbs-up-fill"></i
-                      ><span class="m-1"
-                        >{{ video.like_count | human_format_count }}</span
-                      >Likes</small
-                    >
-                  </li>
-                  <li class="list-group-item text-muted">
-                    <small
-                      ><i class="bi bi-chat-left-dots-fill"></i
-                      ><span class="m-1"
-                        >{{ video.comment_count | human_format_count }}</span
-                      >Comments</small
-                    >
-                  </li>
-                  <li class="list-group-item text-muted">
-                    <small
-                      ><i class="bi bi-stopwatch-fill"></i
-                      ><span class="m-1"
-                        >{{ video.uploaded_time | date:"j M, Y h:i A" }}</span
-                      >UTC</small
-                    >
-                  </li>
-                </ul>
-                <p class="card-text">
-                  <span class="watch-video-link">
-                    <a
-                      href="{{ video.url }}"
-                      target="_blank"
-                      class="card-link float-end"
-                      ><i class="bi bi-collection-play-fill"></i> Watch video
-                      <span><i class="bi bi-arrow-right"></i> </span
-                    ></a>
-                  </span>
-                </p>
-                <div></div>
-              </div>
+   <div class="mb-4">
+      <h2 class="playlist-title">{{playlist_title}}</h2>
+      <span class="text-muted float-end"><i class="bi bi-check2-all"></i> No. of videos: {{video_count}}</span>
+      <br>
+      <hr>
+      <div>
+         <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-12">
+               <div class="playlist-duration-tile">
+                  <small class="text-muted"><i class="bi bi-music-note-list"></i> Playlist Duration</small>
+                  <h5>{{ total_duration.1 }}</h5>
+               </div>
             </div>
-          </div>
-          {% endfor %}
-        </div>
-      </div>
-      <div
-        class="tab-pane fade"
-        id="oldest-first-tab-pane"
-        role="tabpanel"
-        aria-labelledby="oldest-first-tab"
-        tabindex="0"
-      >
-        <div class="row">
-          {% for video in oldest_first %}
-          <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-            <div class="card">
-              <a href="{{ video.url }}" target="_blank"
-                ><img
-                  src="{{ video.thumbnail }}"
-                  class="card-img-top"
-                  alt="..."
-              /></a>
-              <div class="card-body">
-                <h5 class="card-title video-title">{{ video.title }} ...</h5>
-                <ul class="list-group list-group-flush video-stats">
-                  <li class="list-group-item text-muted">
-                    <small
-                      ><i class="bi bi-clock-fill"></i
-                      ><span class="m-1"
-                        >{{ video.raw_video_duration }}</span
-                      ></small
-                    >
-                  </li>
-                  <li class="list-group-item text-muted">
-                    <small
-                      ><i class="bi bi-eye-fill"></i
-                      ><span class="m-1"
-                        >{{ video.view_count | human_format_count }}</span
-                      >Views</small
-                    >
-                  </li>
-                  <li class="list-group-item text-muted">
-                    <small
-                      ><i class="bi bi-hand-thumbs-up-fill"></i
-                      ><span class="m-1"
-                        >{{ video.like_count | human_format_count }}</span
-                      >Likes</small
-                    >
-                  </li>
-                  <li class="list-group-item text-muted">
-                    <small
-                      ><i class="bi bi-chat-left-dots-fill"></i
-                      ><span class="m-1"
-                        >{{ video.comment_count | human_format_count }}</span
-                      >Comments</small
-                    >
-                  </li>
-                  <li class="list-group-item text-muted">
-                    <small
-                      ><i class="bi bi-stopwatch-fill"></i
-                      ><span class="m-1"
-                        >{{ video.uploaded_time | date:"j M, Y h:i A" }}</span
-                      >UTC</small
-                    >
-                  </li>
-                </ul>
-                <p class="card-text">
-                  <span class="watch-video-link">
-                    <a
-                      href="{{ video.url }}"
-                      target="_blank"
-                      class="card-link float-end"
-                      ><i class="bi bi-collection-play-fill"></i> Watch video
-                      <span><i class="bi bi-arrow-right"></i> </span
-                    ></a>
-                  </span>
-                </p>
-                <div></div>
-              </div>
+
+            <div class="col-lg-4 col-md-6 col-sm-12">
+               <div class="playlist-duration-tile">
+                  <small class="text-muted"><i class="bi bi-music-note-list"></i> Average Duration</small>
+                  <h5>{{ average_video_length }}</h5>
+               </div>
             </div>
-          </div>
-          {% endfor %}
-        </div>
-      </div>
-      <div
-        class="tab-pane fade"
-        id="most-viewed-tab-pane"
-        role="tabpanel"
-        aria-labelledby="most-viewed-tab"
-        tabindex="0"
-      >
-        <div class="row">
-          {% for video in most_viewed %}
-          <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-            <div class="card">
-              <a href="{{ video.url }}" target="_blank"
-                ><img
-                  src="{{ video.thumbnail }}"
-                  class="card-img-top"
-                  alt="..."
-              /></a>
-              <div class="card-body">
-                <h5 class="card-title video-title">{{ video.title }} ...</h5>
-                <ul class="list-group list-group-flush video-stats">
-                  <li class="list-group-item text-muted">
-                    <small
-                      ><i class="bi bi-clock-fill"></i
-                      ><span class="m-1"
-                        >{{ video.raw_video_duration }}</span
-                      ></small
-                    >
-                  </li>
-                  <li class="list-group-item text-muted">
-                    <small
-                      ><i class="bi bi-eye-fill"></i
-                      ><span class="m-1"
-                        >{{ video.view_count | human_format_count }}</span
-                      >Views</small
-                    >
-                  </li>
-                  <li class="list-group-item text-muted">
-                    <small
-                      ><i class="bi bi-hand-thumbs-up-fill"></i
-                      ><span class="m-1"
-                        >{{ video.like_count | human_format_count }}</span
-                      >Likes</small
-                    >
-                  </li>
-                  <li class="list-group-item text-muted">
-                    <small
-                      ><i class="bi bi-chat-left-dots-fill"></i
-                      ><span class="m-1"
-                        >{{ video.comment_count | human_format_count }}</span
-                      >Comments</small
-                    >
-                  </li>
-                  <li class="list-group-item text-muted">
-                    <small
-                      ><i class="bi bi-stopwatch-fill"></i
-                      ><span class="m-1"
-                        >{{ video.uploaded_time | date:"j M, Y h:i A" }}</span
-                      >UTC</small
-                    >
-                  </li>
-                </ul>
-                <p class="card-text">
-                  <span class="watch-video-link">
-                    <a
-                      href="{{ video.url }}"
-                      target="_blank"
-                      class="card-link float-end"
-                      ><i class="bi bi-collection-play-fill"></i> Watch video
-                      <span><i class="bi bi-arrow-right"></i> </span
-                    ></a>
-                  </span>
-                </p>
-                <div></div>
-              </div>
+
+            <div class="col-lg-4 col-md-6 col-sm-12">
+               <div class="playlist-duration-tile">
+                  <small class="text-muted"><i class="bi bi-fast-forward-btn-fill"></i> At 1.25X speed</small>
+                  <h5>{{ total_duration.125 }}</h5>
+               </div>
             </div>
-          </div>
-          {% endfor %}
-        </div>
-      </div>
-      <div
-        class="tab-pane fade"
-        id="most-liked-tab-pane"
-        role="tabpanel"
-        aria-labelledby="most-liked-tab"
-        tabindex="0"
-      >
-        <div class="row">
-          {% for video in most_liked %}
-          <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-            <div class="card">
-              <a href="{{ video.url }}" target="_blank"
-                ><img
-                  src="{{ video.thumbnail }}"
-                  class="card-img-top"
-                  alt="..."
-              /></a>
-              <div class="card-body">
-                <h5 class="card-title video-title">{{ video.title }} ...</h5>
-                <ul class="list-group list-group-flush video-stats">
-                  <li class="list-group-item text-muted">
-                    <small
-                      ><i class="bi bi-clock-fill"></i
-                      ><span class="m-1"
-                        >{{ video.raw_video_duration }}</span
-                      ></small
-                    >
-                  </li>
-                  <li class="list-group-item text-muted">
-                    <small
-                      ><i class="bi bi-eye-fill"></i
-                      ><span class="m-1"
-                        >{{ video.view_count | human_format_count }}</span
-                      >Views</small
-                    >
-                  </li>
-                  <li class="list-group-item text-muted">
-                    <small
-                      ><i class="bi bi-hand-thumbs-up-fill"></i
-                      ><span class="m-1"
-                        >{{ video.like_count | human_format_count }}</span
-                      >Likes</small
-                    >
-                  </li>
-                  <li class="list-group-item text-muted">
-                    <small
-                      ><i class="bi bi-chat-left-dots-fill"></i
-                      ><span class="m-1"
-                        >{{ video.comment_count | human_format_count }}</span
-                      >Comments</small
-                    >
-                  </li>
-                  <li class="list-group-item text-muted">
-                    <small
-                      ><i class="bi bi-stopwatch-fill"></i
-                      ><span class="m-1"
-                        >{{ video.uploaded_time | date:"j M, Y h:i A" }}</span
-                      >UTC</small
-                    >
-                  </li>
-                </ul>
-                <p class="card-text">
-                  <span class="watch-video-link">
-                    <a
-                      href="{{ video.url }}"
-                      target="_blank"
-                      class="card-link float-end"
-                      ><i class="bi bi-collection-play-fill"></i> Watch video
-                      <span><i class="bi bi-arrow-right"></i> </span
-                    ></a>
-                  </span>
-                </p>
-                <div></div>
-              </div>
+
+            <div class="col-lg-4 col-md-6 col-sm-12">
+               <div class="playlist-duration-tile">
+                  <small class="text-muted"><i class="bi bi-fast-forward-btn-fill"></i> At 1.5X speed</small>
+                  <h5>{{ total_duration.150 }}</h5>
+               </div>
             </div>
-          </div>
-          {% endfor %}
-        </div>
-      </div>
-      <div
-        class="tab-pane fade"
-        id="shortest-first-tab-pane"
-        role="tabpanel"
-        aria-labelledby="shortest-first-tab"
-        tabindex="0"
-      >
-        <div class="row">
-          {% for video in shortest_first %}
-          <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-            <div class="card">
-              <a href="{{ video.url }}" target="_blank"
-                ><img
-                  src="{{ video.thumbnail }}"
-                  class="card-img-top"
-                  alt="..."
-              /></a>
-              <div class="card-body">
-                <h5 class="card-title video-title">{{ video.title }} ...</h5>
-                <ul class="list-group list-group-flush video-stats">
-                  <li class="list-group-item text-muted">
-                    <small
-                      ><i class="bi bi-clock-fill"></i
-                      ><span class="m-1"
-                        >{{ video.raw_video_duration }}</span
-                      ></small
-                    >
-                  </li>
-                  <li class="list-group-item text-muted">
-                    <small
-                      ><i class="bi bi-eye-fill"></i
-                      ><span class="m-1"
-                        >{{ video.view_count | human_format_count }}</span
-                      >Views</small
-                    >
-                  </li>
-                  <li class="list-group-item text-muted">
-                    <small
-                      ><i class="bi bi-hand-thumbs-up-fill"></i
-                      ><span class="m-1"
-                        >{{ video.like_count | human_format_count }}</span
-                      >Likes</small
-                    >
-                  </li>
-                  <li class="list-group-item text-muted">
-                    <small
-                      ><i class="bi bi-chat-left-dots-fill"></i
-                      ><span class="m-1"
-                        >{{ video.comment_count | human_format_count }}</span
-                      >Comments</small
-                    >
-                  </li>
-                  <li class="list-group-item text-muted">
-                    <small
-                      ><i class="bi bi-stopwatch-fill"></i
-                      ><span class="m-1"
-                        >{{ video.uploaded_time | date:"j M, Y h:i A" }}</span
-                      >UTC</small
-                    >
-                  </li>
-                </ul>
-                <p class="card-text">
-                  <span class="watch-video-link">
-                    <a
-                      href="{{ video.url }}"
-                      target="_blank"
-                      class="card-link float-end"
-                      ><i class="bi bi-collection-play-fill"></i> Watch video
-                      <span><i class="bi bi-arrow-right"></i> </span
-                    ></a>
-                  </span>
-                </p>
-                <div></div>
-              </div>
+
+            <div class="col-lg-4 col-md-6 col-sm-12">
+               <div class="playlist-duration-tile">
+
+                  <small class="text-muted"><i class="bi bi-fast-forward-btn-fill"></i> At 1.75X speed</small>
+                  <h5>{{ total_duration.175 }}</h5>
+               </div>
             </div>
-          </div>
-          {% endfor %}
-        </div>
-      </div>
-      <div
-        class="tab-pane fade"
-        id="longest-first-tab-pane"
-        role="tabpanel"
-        aria-labelledby="longest-first-tab"
-        tabindex="0"
-      >
-        <div class="row">
-          {% for video in longest_first %}
-          <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-            <div class="card">
-              <a href="{{ video.url }}" target="_blank"
-                ><img
-                  src="{{ video.thumbnail }}"
-                  class="card-img-top"
-                  alt="..."
-              /></a>
-              <div class="card-body">
-                <h5 class="card-title video-title">{{ video.title }} ...</h5>
-                <ul class="list-group list-group-flush video-stats">
-                  <li class="list-group-item text-muted">
-                    <small
-                      ><i class="bi bi-clock-fill"></i
-                      ><span class="m-1"
-                        >{{ video.raw_video_duration }}</span
-                      ></small
-                    >
-                  </li>
-                  <li class="list-group-item text-muted">
-                    <small
-                      ><i class="bi bi-eye-fill"></i
-                      ><span class="m-1"
-                        >{{ video.view_count | human_format_count }}</span
-                      >Views</small
-                    >
-                  </li>
-                  <li class="list-group-item text-muted">
-                    <small
-                      ><i class="bi bi-hand-thumbs-up-fill"></i
-                      ><span class="m-1"
-                        >{{ video.like_count | human_format_count }}</span
-                      >Likes</small
-                    >
-                  </li>
-                  <li class="list-group-item text-muted">
-                    <small
-                      ><i class="bi bi-chat-left-dots-fill"></i
-                      ><span class="m-1"
-                        >{{ video.comment_count | human_format_count }}</span
-                      >Comments</small
-                    >
-                  </li>
-                  <li class="list-group-item text-muted">
-                    <small
-                      ><i class="bi bi-stopwatch-fill"></i
-                      ><span class="m-1"
-                        >{{ video.uploaded_time | date:"j M, Y h:i A" }}</span
-                      >UTC</small
-                    >
-                  </li>
-                </ul>
-                <p class="card-text">
-                  <span class="watch-video-link">
-                    <a
-                      href="{{ video.url }}"
-                      target="_blank"
-                      class="card-link float-end"
-                      ><i class="bi bi-collection-play-fill"></i> Watch video
-                      <span><i class="bi bi-arrow-right"></i> </span
-                    ></a>
-                  </span>
-                </p>
-                <div></div>
-              </div>
+
+            <div class="col-lg-4 col-md-6 col-sm-12">
+               <div class="playlist-duration-tile">
+                  <small class="text-muted"><i class="bi bi-fast-forward-btn-fill"></i> At 2X speed</small>
+                  <h5>{{ total_duration.2 }}</h5>
+               </div>
             </div>
-          </div>
-          {% endfor %}
-        </div>
+         </div>
+
       </div>
-    </div>
-  </div>
+      <hr>
+   </div>
+
+
+   <div>
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+         <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="latest-first-tab" data-bs-toggle="tab"
+               data-bs-target="#latest-first-tab-pane" type="button" role="tab" aria-controls="latest-first-tab-pane"
+               aria-selected="true">Latest</button>
+         </li>
+         <li class="nav-item" role="presentation">
+            <button class="nav-link" id="oldest-first-tab" data-bs-toggle="tab" data-bs-target="#oldest-first-tab-pane"
+               type="button" role="tab" aria-controls="oldest-first-tab-pane" aria-selected="false">Oldest</button>
+         </li>
+         <li class="nav-item" role="presentation">
+            <button class="nav-link" id="most-viewed-tab" data-bs-toggle="tab" data-bs-target="#most-viewed-tab-pane"
+               type="button" role="tab" aria-controls="most-viewed-tab-pane" aria-selected="false">Views</button>
+         </li>
+         <li class="nav-item" role="presentation">
+            <button class="nav-link" id="most-liked-tab" data-bs-toggle="tab" data-bs-target="#most-liked-tab-pane"
+               type="button" role="tab" aria-controls="most-liked-tab-pane" aria-selected="false">Likes</button>
+         </li>
+         <li class="nav-item" role="presentation">
+            <button class="nav-link" id="shortest-first-tab" data-bs-toggle="tab" data-bs-target="#shortest-first-tab-pane"
+               type="button" role="tab" aria-controls="shortest-first-tab-pane" aria-selected="false">Shortest</button>
+         </li>
+         <li class="nav-item" role="presentation">
+            <button class="nav-link" id="longest-first-tab" data-bs-toggle="tab" data-bs-target="#longest-first-tab-pane"
+               type="button" role="tab" aria-controls="longest-first-tab-pane" aria-selected="false">Longest</button>
+         </li>
+      </ul>
+
+      <div class="tab-content" id="myTabContent">
+         <div class="tab-pane fade show active mt-3" id="latest-first-tab-pane" role="tabpanel"
+            aria-labelledby="latest-first-tab" tabindex="0">
+            <div class="row">
+               {% for video in latest_first %}
+               <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                  <div class="card">
+                     <a href="{{ video.url }}" target="_blank"><img src="{{ video.thumbnail }}" class="card-img-top"
+                           alt="..."></a>
+                     <div class="card-body">
+                        <h5 class="card-title video-title">{{ video.title }} ...</h5>
+                        <ul class="list-group list-group-flush video-stats">
+                           <li class="list-group-item text-muted"><small><i class="bi bi-clock-fill"></i><span
+                                    class="m-1">{{ video.raw_video_duration }}</span></small></li>
+                           <li class="list-group-item text-muted"><small><i class="bi bi-eye-fill"></i><span
+                                    class="m-1">{{ video.view_count | human_format_count }}</span>Views</small> </li>
+                           <li class="list-group-item text-muted"><small><i class="bi bi-hand-thumbs-up-fill"></i><span
+                                    class="m-1">{{ video.like_count | human_format_count }}</span>Likes</small> </li>
+                           <li class="list-group-item text-muted"><small><i class="bi bi-chat-left-dots-fill"></i><span
+                                    class="m-1">{{ video.comment_count | human_format_count }}</span>Comments</small>
+                           </li>
+                           <li class="list-group-item text-muted"><small><i class="bi bi-stopwatch-fill"></i><span
+                                    class="m-1">{{ video.uploaded_time | date:"j M, Y h:i A" }}</span>UTC</small></li>
+
+                        </ul>
+                        <p class="card-text">
+                           <span class="watch-video-link">
+                              <a href="{{ video.url }}" target="_blank" class="card-link float-end"><i
+                                    class="bi bi-collection-play-fill"></i> Watch video <span><i
+                                       class="bi bi-arrow-right"></i>
+                                 </span></a>
+                           </span>
+                        </p>
+                        <div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               {% endfor %}
+            </div>
+         </div>
+         <div class="tab-pane fade" id="oldest-first-tab-pane" role="tabpanel" aria-labelledby="oldest-first-tab"
+            tabindex="0">
+            <div class="row">
+               {% for video in oldest_first %}
+               <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                  <div class="card">
+                     <a href="{{ video.url }}" target="_blank"><img src="{{ video.thumbnail }}" class="card-img-top"
+                           alt="..."></a>
+                     <div class="card-body">
+                        <h5 class="card-title video-title">{{ video.title }} ...</h5>
+                        <ul class="list-group list-group-flush video-stats">
+                           <li class="list-group-item text-muted"><small><i class="bi bi-clock-fill"></i><span
+                                    class="m-1">{{ video.raw_video_duration }}</span></small></li>
+                           <li class="list-group-item text-muted"><small><i class="bi bi-eye-fill"></i><span
+                                    class="m-1">{{ video.view_count | human_format_count }}</span>Views</small> </li>
+                           <li class="list-group-item text-muted"><small><i class="bi bi-hand-thumbs-up-fill"></i><span
+                                    class="m-1">{{ video.like_count | human_format_count }}</span>Likes</small> </li>
+                           <li class="list-group-item text-muted"><small><i class="bi bi-chat-left-dots-fill"></i><span
+                                    class="m-1">{{ video.comment_count | human_format_count }}</span>Comments</small>
+                           </li>
+                           <li class="list-group-item text-muted"><small><i class="bi bi-stopwatch-fill"></i><span
+                                    class="m-1">{{ video.uploaded_time | date:"j M, Y h:i A" }}</span>UTC</small></li>
+
+                        </ul>
+                        <p class="card-text">
+                           <span class="watch-video-link">
+                              <a href="{{ video.url }}" target="_blank" class="card-link float-end"><i
+                                    class="bi bi-collection-play-fill"></i> Watch video <span><i
+                                       class="bi bi-arrow-right"></i>
+                                 </span></a>
+                           </span>
+                        </p>
+                        <div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               {% endfor %}
+            </div>
+         </div>
+         <div class="tab-pane fade" id="most-viewed-tab-pane" role="tabpanel" aria-labelledby="most-viewed-tab"
+            tabindex="0">
+            <div class="row">
+               {% for video in most_viewed %}
+               <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                  <div class="card">
+                     <a href="{{ video.url }}" target="_blank"><img src="{{ video.thumbnail }}" class="card-img-top"
+                           alt="..."></a>
+                     <div class="card-body">
+                        <h5 class="card-title video-title">{{ video.title }} ...</h5>
+                        <ul class="list-group list-group-flush video-stats">
+                           <li class="list-group-item text-muted"><small><i class="bi bi-clock-fill"></i><span
+                                    class="m-1">{{ video.raw_video_duration }}</span></small></li>
+                           <li class="list-group-item text-muted"><small><i class="bi bi-eye-fill"></i><span
+                                    class="m-1">{{ video.view_count | human_format_count }}</span>Views</small> </li>
+                           <li class="list-group-item text-muted"><small><i class="bi bi-hand-thumbs-up-fill"></i><span
+                                    class="m-1">{{ video.like_count | human_format_count }}</span>Likes</small> </li>
+                           <li class="list-group-item text-muted"><small><i class="bi bi-chat-left-dots-fill"></i><span
+                                    class="m-1">{{ video.comment_count | human_format_count }}</span>Comments</small>
+                           </li>
+                           <li class="list-group-item text-muted"><small><i class="bi bi-stopwatch-fill"></i><span
+                                    class="m-1">{{ video.uploaded_time | date:"j M, Y h:i A" }}</span>UTC</small></li>
+
+                        </ul>
+                        <p class="card-text">
+                           <span class="watch-video-link">
+                              <a href="{{ video.url }}" target="_blank" class="card-link float-end"><i
+                                    class="bi bi-collection-play-fill"></i> Watch video <span><i
+                                       class="bi bi-arrow-right"></i>
+                                 </span></a>
+                           </span>
+                        </p>
+                        <div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               {% endfor %}
+            </div>
+         </div>
+         <div class="tab-pane fade" id="most-liked-tab-pane" role="tabpanel" aria-labelledby="most-liked-tab"
+            tabindex="0">
+            <div class="row">
+               {% for video in most_liked %}
+               <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                  <div class="card">
+                     <a href="{{ video.url }}" target="_blank"><img src="{{ video.thumbnail }}" class="card-img-top"
+                           alt="..."></a>
+                     <div class="card-body">
+                        <h5 class="card-title video-title">{{ video.title }} ...</h5>
+                        <ul class="list-group list-group-flush video-stats">
+                           <li class="list-group-item text-muted"><small><i class="bi bi-clock-fill"></i><span
+                                    class="m-1">{{ video.raw_video_duration }}</span></small></li>
+                           <li class="list-group-item text-muted"><small><i class="bi bi-eye-fill"></i><span
+                                    class="m-1">{{ video.view_count | human_format_count }}</span>Views</small> </li>
+                           <li class="list-group-item text-muted"><small><i class="bi bi-hand-thumbs-up-fill"></i><span
+                                    class="m-1">{{ video.like_count | human_format_count }}</span>Likes</small> </li>
+                           <li class="list-group-item text-muted"><small><i class="bi bi-chat-left-dots-fill"></i><span
+                                    class="m-1">{{ video.comment_count | human_format_count }}</span>Comments</small>
+                           </li>
+                           <li class="list-group-item text-muted"><small><i class="bi bi-stopwatch-fill"></i><span
+                                    class="m-1">{{ video.uploaded_time | date:"j M, Y h:i A" }}</span>UTC</small></li>
+
+                        </ul>
+                        <p class="card-text">
+                           <span class="watch-video-link">
+                              <a href="{{ video.url }}" target="_blank" class="card-link float-end"><i
+                                    class="bi bi-collection-play-fill"></i> Watch video <span><i
+                                       class="bi bi-arrow-right"></i>
+                                 </span></a>
+                           </span>
+                        </p>
+                        <div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               {% endfor %}
+            </div>
+         </div>
+         <div class="tab-pane fade" id="shortest-first-tab-pane" role="tabpanel" aria-labelledby="shortest-first-tab"
+            tabindex="0">
+            <div class="row">
+               {% for video in shortest_first %}
+               <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                  <div class="card">
+                     <a href="{{ video.url }}" target="_blank"><img src="{{ video.thumbnail }}" class="card-img-top"
+                           alt="..."></a>
+                     <div class="card-body">
+                        <h5 class="card-title video-title">{{ video.title }} ...</h5>
+                        <ul class="list-group list-group-flush video-stats">
+                           <li class="list-group-item text-muted"><small><i class="bi bi-clock-fill"></i><span
+                                    class="m-1">{{ video.raw_video_duration }}</span></small></li>
+                           <li class="list-group-item text-muted"><small><i class="bi bi-eye-fill"></i><span
+                                    class="m-1">{{ video.view_count | human_format_count }}</span>Views</small> </li>
+                           <li class="list-group-item text-muted"><small><i class="bi bi-hand-thumbs-up-fill"></i><span
+                                    class="m-1">{{ video.like_count | human_format_count }}</span>Likes</small> </li>
+                           <li class="list-group-item text-muted"><small><i class="bi bi-chat-left-dots-fill"></i><span
+                                    class="m-1">{{ video.comment_count | human_format_count }}</span>Comments</small>
+                           </li>
+                           <li class="list-group-item text-muted"><small><i class="bi bi-stopwatch-fill"></i><span
+                                    class="m-1">{{ video.uploaded_time | date:"j M, Y h:i A" }}</span>UTC</small></li>
+
+                        </ul>
+                        <p class="card-text">
+                           <span class="watch-video-link">
+                              <a href="{{ video.url }}" target="_blank" class="card-link float-end"><i
+                                    class="bi bi-collection-play-fill"></i> Watch video <span><i
+                                       class="bi bi-arrow-right"></i>
+                                 </span></a>
+                           </span>
+                        </p>
+                        <div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               {% endfor %}
+            </div>
+         </div>
+         <div class="tab-pane fade" id="longest-first-tab-pane" role="tabpanel" aria-labelledby="longest-first-tab"
+            tabindex="0">
+            <div class="row">
+               {% for video in longest_first %}
+               <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                  <div class="card">
+                     <a href="{{ video.url }}" target="_blank"><img src="{{ video.thumbnail }}" class="card-img-top"
+                           alt="..."></a>
+                     <div class="card-body">
+                        <h5 class="card-title video-title">{{ video.title }} ...</h5>
+                        <ul class="list-group list-group-flush video-stats">
+                           <li class="list-group-item text-muted"><small><i class="bi bi-clock-fill"></i><span
+                                    class="m-1">{{ video.raw_video_duration }}</span></small></li>
+                           <li class="list-group-item text-muted"><small><i class="bi bi-eye-fill"></i><span
+                                    class="m-1">{{ video.view_count | human_format_count }}</span>Views</small> </li>
+                           <li class="list-group-item text-muted"><small><i class="bi bi-hand-thumbs-up-fill"></i><span
+                                    class="m-1">{{ video.like_count | human_format_count }}</span>Likes</small> </li>
+                           <li class="list-group-item text-muted"><small><i class="bi bi-chat-left-dots-fill"></i><span
+                                    class="m-1">{{ video.comment_count | human_format_count }}</span>Comments</small>
+                           </li>
+                           <li class="list-group-item text-muted"><small><i class="bi bi-stopwatch-fill"></i><span
+                                    class="m-1">{{ video.uploaded_time | date:"j M, Y h:i A" }}</span>UTC</small></li>
+
+                        </ul>
+                        <p class="card-text">
+                           <span class="watch-video-link">
+                              <a href="{{ video.url }}" target="_blank" class="card-link float-end"><i
+                                    class="bi bi-collection-play-fill"></i> Watch video <span><i
+                                       class="bi bi-arrow-right"></i>
+                                 </span></a>
+                           </span>
+                        </p>
+                        <div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               {% endfor %}
+            </div>
+         </div>
+      </div>
+   </div>
 </div>
 
 {% endif %}
 
 <div class="about-section shadow-effect mb-4 pt-4">
-  <h2>Calculate YouTube Playlist Duration and Analyze Video Stats</h2>
-  <hr />
-  <p class="p-3">
-    Welcome to Youtube Playlist length calculator, your ultimate destination for
-    managing and optimizing your YouTube playlist experience. Youtube Playlist
-    length calculator empowers you to calculate the total duration of youtube
-    playlists, explore average video durations, and dive into comprehensive
-    watch duration analyses. But that's not all – we provide you with advanced
-    sorting options based on Views and Likes and detailed insights into
-    individual videos.
-  </p>
-  <p></p>
-  <div class="key-features">
-    <h3>
-      <i class="bi bi-calculator"></i>&nbsp;&nbsp;Calculate Youtube Playlist
-      Length
-    </h3>
-    <p class="text-muted">
-      Easily determine the total duration of any YouTube playlist. Whether it's
-      a collection of your favorite music videos or educational content, we've
-      got you covered.
-    </p>
-  </div>
-  <div
-    class="ads"
-    style="display: flex; justify-content: center; align-items: center"
-  >
-    <script type="text/javascript">
+   <h2>Calculate YouTube Playlist Duration and Analyze Video Stats</h2>
+   <hr>
+   <p class="p-3">Welcome to Youtube Playlist length calculator, your ultimate destination for managing and optimizing
+      your YouTube playlist experience. Youtube Playlist length calculator empowers you to calculate the total duration of youtube playlists,
+      explore average video durations, and dive into comprehensive watch duration analyses. But that's not all – we
+      provide you with advanced sorting options based on Views and Likes and detailed insights into individual videos.
+   </p>
+   <p>
+   <div class="key-features">
+      <h3><i class="bi bi-calculator"></i>&nbsp;&nbsp;Calculate Youtube Playlist Length</h3>
+      <p class="text-muted">Easily determine the total duration of any YouTube playlist. Whether it's a collection of
+         your favorite music videos or educational content, we've got you covered.</p>
+   </div>
+   <div class="ads" style="display: flex; justify-content: center; align-items: center;">
+      <script type="text/javascript">
       google_ad_client = "ca-pub-8900911783342174";
       /* firsttop728and90 */
       google_ad_slot = "firsttop728and90";
       google_ad_width = 728;
       google_ad_height = 90;
-    </script>
-    <script
-      type="text/javascript"
-      src="//pagead2.googlesyndication.com/pagead/show_ads.js"
-    ></script>
-
-    <div class="key-features">
-      <h3>
-        <i class="bi bi-bar-chart-fill"></i>&nbsp;&nbsp;Average Duration
-        Insights
-      </h3>
-      <p class="text-muted">
-        Discover the average duration of videos within a youtube playlist. This
-        feature is perfect for planning your viewing sessions more effectively.
-      </p>
-    </div>
-    <div
-      class="ads"
-      style="display: flex; justify-content: center; align-items: center"
-    >
-      <script type="text/javascript">
-        google_ad_client = "ca-pub-8900911783342174";
-        /* firsttop728and90 */
-        google_ad_slot = "firsttop728and90";
-        google_ad_width = 728;
-        google_ad_height = 90;
       </script>
-      <script
-        type="text/javascript"
-        src="//pagead2.googlesyndication.com/pagead/show_ads.js"
-      ></script>
+      <script type="text/javascript" src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+      </script>
+   </div>
+   <div class="key-features">
+      <h3><i class="bi bi-bar-chart-fill"></i>&nbsp;&nbsp;Average Duration Insights</h3>
+      <p class="text-muted">Discover the average duration of videos within a youtube playlist. This feature is perfect for
+         planning your viewing sessions more effectively.</p>
+   </div>
+   <div class="ads" style="display: flex; justify-content: center; align-items: center;">
+      <script type="text/javascript">
+      google_ad_client = "ca-pub-8900911783342174";
+      /* firsttop728and90 */
+      google_ad_slot = "firsttop728and90";
+      google_ad_width = 728;
+      google_ad_height = 90;
+      </script>
+      <script type="text/javascript" src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+      </script>
+   </div>
+   <div class="key-features">
+      <h3><i class="bi bi-speedometer"></i>&nbsp;&nbsp;Flexible Playback Speeds</h3>
+      <p class="text-muted">Wonder how long it takes to watch a youtube playlist at different speeds? Find out for 1.25X, 1.5X,
+         1.75X, and 2X playback speeds.</p>
+   </div>
+   <div class="ads" style="display: flex; justify-content: center; align-items: center;">
+      <script type="text/javascript">
+      google_ad_client = "ca-pub-8900911783342174";
+      /* firsttop728and90 */
+      google_ad_slot = "firsttop728and90";
+      google_ad_width = 728;
+      google_ad_height = 90;
+      </script>
+      <script type="text/javascript" src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+      </script>
+   </div>
+   <div class="key-features">
+      <h3><i class="bi bi-funnel-fill"></i>&nbsp;&nbsp;Smart Sorting Options</h3>
+      <p class="text-muted">Sort youtube playlist by upload date to catch up on the latest content or sort by length, views and
+         likes to prioritize the most popular ones.</p>
+   </div>
 
-      <div class="key-features">
-        <h3>
-          <i class="bi bi-speedometer"></i>&nbsp;&nbsp;Flexible Playback Speeds
-        </h3>
-        <p class="text-muted">
-          Wonder how long it takes to watch a youtube playlist at different
-          speeds? Find out for 1.25X, 1.5X, 1.75X, and 2X playback speeds.
-        </p>
-      </div>
-      <div
-        class="ads"
-        style="display: flex; justify-content: center; align-items: center"
-      >
-        <script type="text/javascript">
-          google_ad_client = "ca-pub-8900911783342174";
-          /* firsttop728and90 */
-          google_ad_slot = "firsttop728and90";
-          google_ad_width = 728;
-          google_ad_height = 90;
-        </script>
-        <script
-          type="text/javascript"
-          src="//pagead2.googlesyndication.com/pagead/show_ads.js"
-        ></script>
-
-        <div class="key-features">
-          <h3>
-            <i class="bi bi-funnel-fill"></i>&nbsp;&nbsp;Smart Sorting Options
-          </h3>
-          <p class="text-muted">
-            Sort youtube playlist by upload date to catch up on the latest
-            content or sort by length, views and likes to prioritize the most
-            popular ones.
-          </p>
-        </div>
-
-        <div
-          class="ads"
-          style="display: flex; justify-content: center; align-items: center"
-        >
-          <script type="text/javascript">
-            google_ad_client = "ca-pub-8900911783342174";
-            /* firsttop728and90 */
-            google_ad_slot = "firsttop728and90";
-            google_ad_width = 728;
-            google_ad_height = 90;
-          </script>
-          <script
-            type="text/javascript"
-            src="//pagead2.googlesyndication.com/pagead/show_ads.js"
-          ></script>
-          <div class="key-features">
-            <h3>
-              <i class="bi bi-info-circle-fill"></i>&nbsp;&nbsp;In-depth Video
-              Details
-            </h3>
-            <p class="text-muted">
-              Explore individual video stats in youtube playlist, including
-              duration, views, likes, comments, and upload time. This
-              information helps you decide which videos to watch first in
-              youtube playlist.
-            </p>
-          </div>
-          <div
-            class="ads"
-            style="display: flex; justify-content: center; align-items: center"
-          >
-            <script type="text/javascript">
-              google_ad_client = "ca-pub-8900911783342174";
-              /* firsttop728and90 */
-              google_ad_slot = "firsttop728and90";
-              google_ad_width = 728;
-              google_ad_height = 90;
-            </script>
-            <script
-              type="text/javascript"
-              src="//pagead2.googlesyndication.com/pagead/show_ads.js"
-            ></script>
-
-            <div class="key-features">
-              <h3>
-                <i class="bi bi-arrow-left-right"></i>&nbsp;&nbsp;Calculate
-                YouTube Playlist Length Between Specific Videos
-              </h3>
-              <p class="text-muted">
-                With this calculator, you can find the total length of a YouTube
-                playlist between specific videos by entering the "From" and "To"
-                video numbers, allowing for precise duration calculations within
-                a chosen range.
-              </p>
-            </div>
-          </div>
-          {% endblock content %}
-        </div>
-      </div>
-    </div>
-  </div>
+   <div class="ads" style="display: flex; justify-content: center; align-items: center;">
+      <script type="text/javascript">
+      google_ad_client = "ca-pub-8900911783342174";
+      /* firsttop728and90 */
+      google_ad_slot = "firsttop728and90";
+      google_ad_width = 728;
+      google_ad_height = 90;
+      </script>
+      <script type="text/javascript" src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+      </script>
+   </div>   <div class="key-features">
+      <h3><i class="bi bi-info-circle-fill"></i>&nbsp;&nbsp;In-depth Video Details</h3>
+      <p class="text-muted">Explore individual video stats in youtube playlist, including duration, views, likes, comments, and upload time.
+         This information helps you decide which videos to watch first in youtube playlist.</p>
+   </div>
+   <div class="ads" style="display: flex; justify-content: center; align-items: center;">
+      <script type="text/javascript">
+      google_ad_client = "ca-pub-8900911783342174";
+      /* firsttop728and90 */
+      google_ad_slot = "firsttop728and90";
+      google_ad_width = 728;
+      google_ad_height = 90;
+      </script>
+      <script type="text/javascript" src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+      </script>
 </div>
+   <div class="key-features">
+      <h3><i class="bi bi-arrow-left-right"></i>&nbsp;&nbsp;Calculate YouTube Playlist Length Between Specific Videos</h3>
+      <p class="text-muted">With this calculator, you can find the total length of a YouTube playlist between specific videos by entering the "From" and "To" video numbers, allowing for precise duration calculations within a chosen range.</p>
+   </div>
+
+   </p>
+
+</div>
+{% endblock content %}
